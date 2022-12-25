@@ -1,4 +1,4 @@
-https://app.diagrams.net/
+https://app.diagrams.net/#G160b_zrXDQkI68bU0jpFgFoqFbD1Gia1p
 
 https://github.com/netology-code/py-homeworks-db/tree/video/02-creation
 
