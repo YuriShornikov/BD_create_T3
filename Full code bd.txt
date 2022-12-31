@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS musical_genres 
+﻿CREATE TABLE IF NOT EXISTS musical_genres 
 (
 	musical_genre_id SERIAL PRIMARY KEY,
 	name VARCHAR(60) NOT NULL
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS digests_tracks
 );
 
 INSERT INTO musicians(name)
-VALUES('Михаил Горшенёв'), ('Виктор Цой'), ('Александр Васильев'), ('Алексей Горшенёв'), ('Маша Архипова'), ('Олег Степанов'), ('Тилль Линдеманн'), ('Алексей Юзленко');
+VALUES('Михаил Горшенёв'), ('Виктор Цой'), ('Александр Васильев'), ('Алексей Горшенёв'), ('Маша Архипова'), ('Феофан'), ('Тилль Линдеманн'), ('Алексей Юзленко');
 
 SELECT * FROM musicians;
 
@@ -70,9 +70,33 @@ SELECT * FROM albums;
 
 INSERT INTO tracks(name, time, album_id)
 VALUES('Фокусник', 213, 1), ('Темный учитель', 276, 1), ('Группа крови', 286, 2), ('В наших глазах', 215, 2), ('Встречная полоса', 268, 3), ('На утро', 244, 3), 
-('Артист', 232, 4), ('Шторм', 242, 4), ('Храм', 590, 5), ('Мантра (Интро)', 231, 5), ('Древнерусский рейв', 220, 6), ('На заре', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Жизнь и Смерть', 254, 8), ('Душа', 225, 8);
+('Артист', 232, 4), ('Шторм', 242, 4), ('Мой храм', 590, 5), ('Мантра (Интро)', 231, 5), ('Древнерусский рейв', 220, 6), ('На заре', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Жизнь и Смерть', 254, 8), ('Душа', 225, 8);
 
 SELECT * FROM tracks;
 
 INSERT INTO digests(name, digests_release)
-VALUES('Быль и Небыль. Том II', 2022), ('Последний герой', 1989)
+VALUES('Быль и Небыль. Том II', 2022), ('Последний герой', 1989), ('Лучшие песни 90х', 1993), ('Рок хиты', 2010), ('Лучшие фолк треки', 2019), ('Das Modell', 1997), ('Rock hits 150', 2021), ('Hold Your Colour', 2005);
+
+SELECT * FROM digests;
+
+
+SELECT name, album_release FROM albums
+where album_release = 2018;
+
+select name, time from tracks
+order by time desc
+limit 1;
+
+select name, time from tracks
+where time >= 210;
+
+select name, digests_release from digests
+where digests_release between 2018 and 2020;
+
+select name from musicians
+where name not like '% %';
+
+update tracks set name = replace (name, 'Мой', 'My')
+where name like '%Мой%';
+
+select * from tracks;
