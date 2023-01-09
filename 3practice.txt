@@ -1,0 +1,68 @@
+select * from film;
+
+select MAX(rental_rate) from film;
+
+select max(rental_rate), min(rental_rate) from film; 
+
+select avg(length) from film; 
+
+select count(first_name) from actor;
+
+select count(*) from actor;
+
+select * from payment;
+
+select sum(amount), avg(amount) from payment
+where staff_id = 1;
+
+select title, rental_rate, length from film
+where rental_rate > (select avg(rental_rate) from film) and length >= (select avg(length) from film);
+
+select * from actor;
+
+select last_name, count(*) from actor
+group by last_name
+order by count(*) desc; --сортировка по данному столбцу
+
+select * from payment;
+
+select staff_id, rental_id, avg(amount) from payment
+group by staff_id, rental_id
+order by avg(amount) desc;
+
+select staff_id, max(amount) from payment
+group by staff_id;
+
+select * from film;
+
+select title, sum(rental_duration) from film
+where title like '%Super%' -- выполняется до группировки, т.е. мы извлекаем из базы данных такие фильмы с титлом, где содержистя название супер
+group by title -- далее группируем по титлу
+having sum(rental_duration) > 4; -- оператор выполняется после группировки, сртируем по полю, где значение больше 4
+
+select title t, rental_duration r_d from film f -- использование псевдонивом, после названия через пробел или as указывается сокращенное название
+group by t, r_d -- здесь все можно, группировка выполнится
+having rental_duration > 4; -- после having/where нельзя использовать псевдонимы
+
+--join 
+
+select * from staff s;
+
+select first_name, last_name, address from staff s 
+left join address a on s.address_id = a.address_id; -- on s  это стаф = a адресс таблицы, соединениех двух таблиц
+
+
+select s.last_name, count(amount) from payment p
+left join staff s on p.staff_id = s.staff_id 
+group by s.last_name;
+
+select title, count(inventory_id) from film f 
+join inventory i on f.film_id = i.film_id
+where title like '%Super%'
+group by title;
+
+select c.first_name, c.last_name, c.email  from customer c
+join address a on c.address_id = a.address_id 
+join city c2 on a.city_id = c2.city_id 
+join country c3 on c2.country_id = c3.country_id 
+where country = 'Russian Federation';
