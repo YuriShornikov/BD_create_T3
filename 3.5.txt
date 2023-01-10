@@ -157,7 +157,3 @@ join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
 WHERE m.name ='Виктор Цой' and m.name ='Алексей Горшенёв'
 group by d.name ;
-
---3.6
-SELECT a.name from ALBUMS A 
-join 
