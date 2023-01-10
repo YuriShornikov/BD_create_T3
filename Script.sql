@@ -1,4 +1,4 @@
-п»їCREATE TABLE IF NOT EXISTS musical_genres 
+CREATE TABLE IF NOT EXISTS musical_genres 
 (
 	musical_genre_id SERIAL PRIMARY KEY,
 	name VARCHAR(60) NOT NULL
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS digests_tracks
 );
 
 INSERT INTO musicians(name)
-VALUES('РњРёС…Р°РёР» Р“РѕСЂС€РµРЅС‘РІ'), ('Р’РёРєС‚РѕСЂ Р¦РѕР№'), ('РђР»РµРєСЃР°РЅРґСЂ Р’Р°СЃРёР»СЊРµРІ'), ('РђР»РµРєСЃРµР№ Р“РѕСЂС€РµРЅС‘РІ'), ('РњР°С€Р° РђСЂС…РёРїРѕРІР°'), ('РћР»РµРі РЎС‚РµРїР°РЅРѕРІ'), ('РўРёР»Р»СЊ Р›РёРЅРґРµРјР°РЅРЅ'), ('РђР»РµРєСЃРµР№ Р®Р·Р»РµРЅРєРѕ');
+VALUES('Михаил Горшенёв'), ('Виктор Цой'), ('Александр Васильев'), ('Алексей Горшенёв'), ('Маша Архипова'), ('Олег Степанов'), ('Тилль Линдеманн'), ('Алексей Юзленко');
 
 SELECT * FROM musicians;
 
@@ -64,7 +64,7 @@ VALUES('Art pank'), ('Rock'), ('Folk metal'), ('Drum n bass'), ('Indastrisl meta
 SELECT * FROM musical_genres;
 
 INSERT INTO albums(name, album_release)
-VALUES('РўРµР°С‚СЂ РґРµРјРѕРЅРѕРІ', 2010), ('Р“СЂСѓРїРїР° РєСЂРѕРІРё', 1988), ('Р’СЃС‚СЂРµС‡РЅР°СЏ РїРѕР»РѕСЃР°', 2018), ('РђСЂС‚РёСЃС‚', 2016), ('РҐСЂР°Рј', 2018), ('Р”СЂРµРІРЅРµСЂСѓСЃСЃРєРёР№ СЂРµР№РІ', 2021), ('Zeit', 2022), ('Р–РёР·РЅСЊ Рё РЎРјРµСЂС‚СЊ', 2020), ('Р’С‹РјС‹С€Р»РµРЅРЅС‹Р№ Р°Р»СЊР±РѕРј', 2023);
+VALUES('Театр демонов', 2010), ('Группа крови', 1988), ('Встречная полоса', 2018), ('Артист', 2016), ('Храм', 2018), ('Древнерусский рейв', 2021), ('Zeit', 2022), ('Жизнь и Смерть', 2020), ('Вымышленный альбом', 2023);
 
 INSERT INTO MUSICIANS_ALBUMS(musician_id, album_id)
 VALUES(7, 9), (6, 9);
@@ -84,13 +84,13 @@ select * from MUSICIANS_ALBUMS MA
 SELECT * FROM MUSICAL_GENRES_MUSICIAS;
 
 INSERT INTO tracks(name, time, album_id)
-VALUES('Р¤РѕРєСѓСЃРЅРёРє', 213, 1), ('РўРµРјРЅС‹Р№ СѓС‡РёС‚РµР»СЊ', 276, 1), ('Р“СЂСѓРїРїР° РєСЂРѕРІРё', 286, 2), ('Р’ РЅР°С€РёС… РіР»Р°Р·Р°С…', 215, 2), ('Р’СЃС‚СЂРµС‡РЅР°СЏ РїРѕР»РѕСЃР°', 268, 3), ('РќР° СѓС‚СЂРѕ', 244, 3), 
-('РђСЂС‚РёСЃС‚', 232, 4), ('РЁС‚РѕСЂРј', 242, 4), ('РҐСЂР°Рј', 590, 5), ('РњР°РЅС‚СЂР° (РРЅС‚СЂРѕ)', 231, 5), ('Р”СЂРµРІРЅРµСЂСѓСЃСЃРєРёР№ СЂРµР№РІ', 220, 6), ('РќР° Р·Р°СЂРµ', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Р–РёР·РЅСЊ Рё РЎРјРµСЂС‚СЊ', 254, 8), ('Р”СѓС€Р°', 189, 8);
+VALUES('Фокусник', 213, 1), ('Темный учитель', 276, 1), ('Группа крови', 286, 2), ('В наших глазах', 215, 2), ('Встречная полоса', 268, 3), ('На утро', 244, 3), 
+('Артист', 232, 4), ('Шторм', 242, 4), ('Храм', 590, 5), ('Мантра (Интро)', 231, 5), ('Древнерусский рейв', 220, 6), ('На заре', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Жизнь и Смерть', 254, 8), ('Душа', 189, 8);
 
 SELECT * FROM tracks;
 
 INSERT INTO digests(name, digests_release)
-VALUES('Р‘С‹Р»СЊ Рё РќРµР±С‹Р»СЊ. РўРѕРј II', 2022), ('РџРѕСЃР»РµРґРЅРёР№ РіРµСЂРѕР№', 1989), ('Р›СѓС‡С€РёРµ РїРµСЃРЅРё 90С…', 1993), ('Р РѕРє С…РёС‚С‹', 2010), ('Р›СѓС‡С€РёРµ С„РѕР»Рє С‚СЂРµРєРё', 2019), ('Das Modell', 1997), ('Rock hits 150', 2021), ('Hold Your Colour', 2005);
+VALUES('Быль и Небыль. Том II', 2022), ('Последний герой', 1989), ('Лучшие песни 90х', 1993), ('Рок хиты', 2010), ('Лучшие фолк треки', 2019), ('Das Modell', 1997), ('Rock hits 150', 2021), ('Hold Your Colour', 2005);
 
 select * from DIGESTS D ;
 
@@ -134,10 +134,10 @@ join TRACKS T on dt.TRACK_ID = t.TRACK_ID
 join ALBUMS A on t.ALBUM_ID = a.ALBUM_ID 
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
---WHERE m.name in ('Р’РёРєС‚РѕСЂ Р¦РѕР№', 'РњРёС…Р°РёР» Р“РѕСЂС€РµРЅС‘РІ')
-WHERE m.name like '%РњРёС…Р°РёР» Р“РѕСЂС€РµРЅС‘РІ%'
---WHERE m.name ='Р’РёРєС‚РѕСЂ Р¦РѕР№' and m.name ='РњРёС…Р°РёР» Р“РѕСЂС€РµРЅС‘РІ'
-GROUP by d.name ; -- РЅРµ РІС‹РІРѕРґРёС‚ РёРЅС„Сѓ
+--WHERE m.name in ('Виктор Цой', 'Михаил Горшенёв')
+WHERE m.name like '%Михаил Горшенёв%'
+--WHERE m.name ='Виктор Цой' and m.name ='Михаил Горшенёв'
+GROUP by d.name ; -- не выводит инфу
 
 --3.6
 SELECT a.name, count(mgm.MUSICIAN_ID) as count1 from ALBUMS A 
@@ -147,7 +147,7 @@ JOIN MUSICAL_GENRES_MUSICIAS MGM on m.MUSICIAN_ID = mgm.MUSICIAN_ID
 JOIN MUSICAL_GENRES MG on mgm.MUSICAL_GENRE_ID = mg.MUSICAL_GENRE_ID 
 WHERE (mgm.MUSICIAN_ID) < 2
 GROUP by a.name;
---order by count(mgm.MUSICIAN_ID); РЅРµ РіРѕС‚РѕРІРѕ
+--order by count(mgm.MUSICIAN_ID); не готово
 
 --3.7
 SELECT t.name as track from TRACKS T 
@@ -166,10 +166,10 @@ group by m.name;
 
 --3.9
 INSERT into MUSICIANS(name)
-VALUES('Р‘СѓС‚СѓСЃРѕРІ');
+VALUES('Бутусов');
 
 INSERT into ALBUMS(name, album_release)
-Values('РЅРµ РїРѕРјРЅСЋ', 2015);
+Values('не помню', 2015);
 
 SELECT * from ALBUMS A ;
 
@@ -177,7 +177,7 @@ INSERT into MUSICIANS_ALBUMS(musician_id, album_id)
 VALUES(9, 10);
 
 insert into TRACKS(name, time, album_id)
-values('10 РјРёРЅСѓС‚', 200, 10);
+values('10 минут', 200, 10);
 
 SELECT * from TRACKS T 
 
