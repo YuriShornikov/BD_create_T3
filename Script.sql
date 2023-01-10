@@ -1,4 +1,4 @@
-?CREATE TABLE IF NOT EXISTS musical_genres 
+CREATE TABLE IF NOT EXISTS musical_genres 
 (
 	musical_genre_id SERIAL PRIMARY KEY,
 	name VARCHAR(60) NOT NULL
@@ -84,13 +84,8 @@ select * from MUSICIANS_ALBUMS MA
 SELECT * FROM MUSICAL_GENRES_MUSICIAS;
 
 INSERT INTO tracks(name, time, album_id)
-<<<<<<< HEAD
 VALUES('Ôîêóñíèê', 213, 1), ('Òåìíûé ó÷èòåëü', 276, 1), ('Ãðóïïà êðîâè', 286, 2), ('Â íàøèõ ãëàçàõ', 215, 2), ('Âñòðå÷íàÿ ïîëîñà', 268, 3), ('Íà óòðî', 244, 3), 
 ('Àðòèñò', 232, 4), ('Øòîðì', 242, 4), ('Õðàì', 590, 5), ('Ìàíòðà (Èíòðî)', 231, 5), ('Äðåâíåðóññêèé ðåéâ', 220, 6), ('Íà çàðå', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Æèçíü è Ñìåðòü', 254, 8), ('Äóøà', 189, 8);
-=======
-VALUES('Ð¤Ð¾ÐºÑƒÑÐ½Ð¸Ðº', 213, 1), ('Ð¢ÐµÐ¼Ð½Ñ‹Ð¹ ÑƒÑ‡Ð¸Ñ‚ÐµÐ»ÑŒ', 276, 1), ('Ð“Ñ€ÑƒÐ¿Ð¿Ð° ÐºÑ€Ð¾Ð²Ð¸', 286, 2), ('Ð’ Ð½Ð°ÑˆÐ¸Ñ… Ð³Ð»Ð°Ð·Ð°Ñ…', 215, 2), ('Ð’ÑÑ‚Ñ€ÐµÑ‡Ð½Ð°Ñ Ð¿Ð¾Ð»Ð¾ÑÐ°', 268, 3), ('ÐÐ° ÑƒÑ‚Ñ€Ð¾', 244, 3), 
-('ÐÑ€Ñ‚Ð¸ÑÑ‚', 232, 4), ('Ð¨Ñ‚Ð¾Ñ€Ð¼', 242, 4), ('Ð¥Ñ€Ð°Ð¼', 590, 5), ('ÐœÐ°Ð½Ñ‚Ñ€Ð° (Ð˜Ð½Ñ‚Ñ€Ð¾)', 231, 5), ('Ð”Ñ€ÐµÐ²Ð½ÐµÑ€ÑƒÑÑÐºÐ¸Ð¹ Ñ€ÐµÐ¹Ð²', 220, 6), ('ÐÐ° Ð·Ð°Ñ€Ðµ', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Ð–Ð¸Ð·Ð½ÑŒ Ð¸ Ð¡Ð¼ÐµÑ€Ñ‚ÑŒ', 254, 8), ('Ð”ÑƒÑˆÐ°', 189, 8);
->>>>>>> refs/remotes/origin/main
 
 SELECT * FROM tracks;
 
@@ -139,17 +134,10 @@ join TRACKS T on dt.TRACK_ID = t.TRACK_ID
 join ALBUMS A on t.ALBUM_ID = a.ALBUM_ID 
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
-<<<<<<< HEAD
 --WHERE m.name in ('Âèêòîð Öîé', 'Ìèõàèë Ãîðøåí¸â')
 WHERE m.name like '%Ìèõàèë Ãîðøåí¸â%'
 --WHERE m.name ='Âèêòîð Öîé' and m.name ='Ìèõàèë Ãîðøåí¸â'
 GROUP by d.name ; -- íå âûâîäèò èíôó
-=======
---WHERE m.name in ('Ð’Ð¸ÐºÑ‚Ð¾Ñ€ Ð¦Ð¾Ð¹', 'ÐœÐ¸Ñ…Ð°Ð¸Ð» Ð“Ð¾Ñ€ÑˆÐµÐ½Ñ‘Ð²')
-WHERE m.name like '%ÐœÐ¸Ñ…Ð°Ð¸Ð» Ð“Ð¾Ñ€ÑˆÐµÐ½Ñ‘Ð²%'
---WHERE m.name ='Ð’Ð¸ÐºÑ‚Ð¾Ñ€ Ð¦Ð¾Ð¹' and m.name ='ÐœÐ¸Ñ…Ð°Ð¸Ð» Ð“Ð¾Ñ€ÑˆÐµÐ½Ñ‘Ð²'
-GROUP by d.name ; -- Ð½Ðµ Ð²Ñ‹Ð²Ð¾Ð´Ð¸Ñ‚ Ð¸Ð½Ñ„Ñƒ
->>>>>>> refs/remotes/origin/main
 
 --3.6
 SELECT a.name, count(mgm.MUSICIAN_ID) as count1 from ALBUMS A 
@@ -159,11 +147,7 @@ JOIN MUSICAL_GENRES_MUSICIAS MGM on m.MUSICIAN_ID = mgm.MUSICIAN_ID
 JOIN MUSICAL_GENRES MG on mgm.MUSICAL_GENRE_ID = mg.MUSICAL_GENRE_ID 
 WHERE (mgm.MUSICIAN_ID) < 2
 GROUP by a.name;
-<<<<<<< HEAD
 --order by count(mgm.MUSICIAN_ID); íå ãîòîâî
-=======
---order by count(mgm.MUSICIAN_ID); Ð½Ðµ Ð³Ð¾Ñ‚Ð¾Ð²Ð¾
->>>>>>> refs/remotes/origin/main
 
 --3.7
 SELECT t.name as track from TRACKS T 
@@ -182,17 +166,10 @@ group by m.name;
 
 --3.9
 INSERT into MUSICIANS(name)
-<<<<<<< HEAD
 VALUES('Áóòóñîâ');
 
 INSERT into ALBUMS(name, album_release)
 Values('íå ïîìíþ', 2015);
-=======
-VALUES('Ð‘ÑƒÑ‚ÑƒÑÐ¾Ð²');
-
-INSERT into ALBUMS(name, album_release)
-Values('Ð½Ðµ Ð¿Ð¾Ð¼Ð½ÑŽ', 2015);
->>>>>>> refs/remotes/origin/main
 
 SELECT * from ALBUMS A ;
 
@@ -200,11 +177,7 @@ INSERT into MUSICIANS_ALBUMS(musician_id, album_id)
 VALUES(9, 10);
 
 insert into TRACKS(name, time, album_id)
-<<<<<<< HEAD
 values('10 ìèíóò', 200, 10);
-=======
-values('10 Ð¼Ð¸Ð½ÑƒÑ‚', 200, 10);
->>>>>>> refs/remotes/origin/main
 
 SELECT * from TRACKS T 
 
