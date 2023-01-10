@@ -208,6 +208,11 @@ values('10 минут', 200, 10);
 
 SELECT * from TRACKS T 
 
-select a.name from ALBUMS A 
-join TRACKS T on a.ALBUM_ID =t.ALBUM_ID 
+select a.name, count(t.album_id) from ALBUMS A 
+join TRACKS T on a.ALBUM_ID =t.ALBUM_ID
 GROUP by a.name;
+having select min(select count(t.album_id) from albums a) from albums
+order by count(t.album_id);
+
+select a.name from ALBUMS A 
+where min(select count(t.album_id) from albums)

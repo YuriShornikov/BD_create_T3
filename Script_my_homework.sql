@@ -66,21 +66,26 @@ SELECT * FROM musical_genres;
 INSERT INTO albums(name, album_release)
 VALUES('Театр демонов', 2010), ('Группа крови', 1988), ('Встречная полоса', 2018), ('Артист', 2016), ('Храм', 2018), ('Древнерусский рейв', 2021), ('Zeit', 2022), ('Жизнь и Смерть', 2020), ('Вымышленный альбом', 2023);
 
+INSERT INTO MUSICIANS_ALBUMS(musician_id, album_id)
+VALUES(7, 9), (6, 9);
+
+SELECT * from MUSICIANS_ALBUMS MA ;
+
 SELECT * FROM albums;
 
 INSERT into MUSICAL_GENRES_MUSICIAS(musician_id, musical_genre_id)
 VALUES(1, 1), (1, 2), (2, 2), (3, 2), (4, 2), (5, 3), (6, 4), (7, 5), (8, 2);
 
 INSERT into MUSICIANS_ALBUMS(musician_id, album_id)
-VALUES(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (7, 9), (6, 9);
+VALUES(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (1, 9), (2, 9);
 
-select * from MUSICIANS_ALBUMS MA; 
+select * from MUSICIANS_ALBUMS MA 
 
 SELECT * FROM MUSICAL_GENRES_MUSICIAS;
 
 INSERT INTO tracks(name, time, album_id)
 VALUES('Фокусник', 213, 1), ('Темный учитель', 276, 1), ('Группа крови', 286, 2), ('В наших глазах', 215, 2), ('Встречная полоса', 268, 3), ('На утро', 244, 3), 
-('Артист', 232, 4), ('Шторм', 242, 4), ('Храм', 590, 5), ('Мантра (Интро)', 231, 5), ('Древнерусский рейв', 220, 6), ('На заре', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Жизнь и Смерть', 254, 8), ('Душа', 225, 8);
+('Артист', 232, 4), ('Шторм', 242, 4), ('Храм', 590, 5), ('Мантра (Интро)', 231, 5), ('Древнерусский рейв', 220, 6), ('На заре', 214, 6), ('Zeit', 322, 7), ('Giffig', 189, 7), ('Жизнь и Смерть', 254, 8), ('Душа', 189, 8);
 
 SELECT * FROM tracks;
 
@@ -93,32 +98,6 @@ insert into DIGESTS_TRACKS(digests_id, track_id)
 VALUES(1, 3), (1, 4), (2, 1), (2, 2), (3, 3), (4, 1), (4, 2), (4, 3), (5, 9), (5, 10), (7, 1), (7, 3), (7, 5), (7, 6), (7, 7), (7, 8), (7, 15) ;
 
 SELECT * from DIGESTS_TRACKS DT ;
-
-
-SELECT name, album_release FROM albums
-where album_release = 2018;
-
-select name, time from tracks
-order by time desc
-limit 1;
-
-select name, time from tracks
-where time >= 210;
-
-select name, digests_release from digests
-where digests_release between 2018 and 2020;
-
-select name from musicians
-where name not like '% %';
-
-update tracks set name = replace (name, 'Мой', 'My')
-where name like '%Мой%';
-
-select * from tracks;
-
-
---ДЗ №3
-
 
 --3.1
 select mg.name, count(m.name) from MUSICAL_GENRES MG 
@@ -145,7 +124,7 @@ SELECT m.name from MUSICIANS M
 join MUSICIANS_ALBUMS MA on m.MUSICIAN_ID = ma.MUSICIAN_ID 
 join ALBUMS A on ma.ALBUM_ID = a.ALBUM_ID
 --GROUP by m.name, a.ALBUM_RELEASE ;
-WHERE a.ALBUM_RELEASE != 2020
+WHERE a.ALBUM_RELEASE  != 2020
 GROUP by m.name;
 
 --3.5
@@ -155,9 +134,60 @@ join TRACKS T on dt.TRACK_ID = t.TRACK_ID
 join ALBUMS A on t.ALBUM_ID = a.ALBUM_ID 
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
-WHERE m.name ='Виктор Цой' and m.name ='Алексей Горшенёв'
-group by d.name ;
+--WHERE m.name in ('Виктор Цой', 'Михаил Горшенёв')
+WHERE m.name like '%Михаил Горшенёв%'
+--WHERE m.name ='Виктор Цой' and m.name ='Михаил Горшенёв'
+GROUP by d.name ; -- не выводит инфу
 
 --3.6
-SELECT a.name from ALBUMS A 
-join 
+SELECT a.name, count(mgm.MUSICIAN_ID) as count1 from ALBUMS A 
+join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
+join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
+JOIN MUSICAL_GENRES_MUSICIAS MGM on m.MUSICIAN_ID = mgm.MUSICIAN_ID 
+JOIN MUSICAL_GENRES MG on mgm.MUSICAL_GENRE_ID = mg.MUSICAL_GENRE_ID 
+WHERE (mgm.MUSICIAN_ID) < 2
+GROUP by a.name;
+--order by count(mgm.MUSICIAN_ID); не готово
+
+--3.7
+SELECT t.name as track from TRACKS T 
+full outer join DIGESTS_TRACKS DT on t.TRACK_ID = dt.TRACK_ID 
+full outer join DIGESTS D on dt.DIGESTS_ID = d.DIGESTS_ID 
+where d.name is null 
+GROUP by t.name;
+
+--3.8
+SELECT m.name from MUSICIANS M 
+join MUSICIANS_ALBUMS MA on m.MUSICIAN_ID = ma.MUSICIAN_ID 
+join ALBUMS A on ma.ALBUM_ID = a.ALBUM_ID 
+join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
+WHERE t.time = (select min(time) from TRACKS)
+group by m.name;
+
+--3.9
+INSERT into MUSICIANS(name)
+VALUES('Бутусов');
+
+INSERT into ALBUMS(name, album_release)
+Values('не помню', 2015);
+
+SELECT * from ALBUMS A ;
+
+INSERT into MUSICIANS_ALBUMS(musician_id, album_id)
+VALUES(9, 10);
+
+select * from MUSICIANS_ALBUMS;
+
+insert into TRACKS(name, time, album_id)
+values('10 минут', 200, 10);
+
+SELECT * from TRACKS T 
+
+select a.name, count(t.album_id) from ALBUMS A 
+join TRACKS T on a.ALBUM_ID =t.ALBUM_ID
+GROUP by a.name;
+having select min(select count(t.album_id) from albums a) from albums
+order by count(t.album_id);
+
+select a.name from ALBUMS A 
+where min(select count(t.album_id) from albums)
