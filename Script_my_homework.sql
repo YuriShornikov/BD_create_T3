@@ -123,7 +123,6 @@ ORDER by avg(t.time);
 SELECT m.name from MUSICIANS M 
 join MUSICIANS_ALBUMS MA on m.MUSICIAN_ID = ma.MUSICIAN_ID 
 join ALBUMS A on ma.ALBUM_ID = a.ALBUM_ID
---GROUP by m.name, a.ALBUM_RELEASE ;
 WHERE a.ALBUM_RELEASE  != 2020
 GROUP by m.name;
 
@@ -135,19 +134,18 @@ join ALBUMS A on t.ALBUM_ID = a.ALBUM_ID
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
 --WHERE m.name in ('Виктор Цой', 'Михаил Горшенёв')
-WHERE m.name like '%Михаил Горшенёв%'
---WHERE m.name ='Виктор Цой' and m.name ='Михаил Горшенёв'
+--WHERE m.name like '%Михаил Горшенёв%'
+WHERE m.name ='Виктор Цой' and m.name ='Михаил Горшенёв'
 GROUP by d.name ; -- не выводит инфу
 
 --3.6
-SELECT a.name, count(mgm.MUSICIAN_ID) as count1 from ALBUMS A 
+SELECT a.name from ALBUMS A 
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
 JOIN MUSICAL_GENRES_MUSICIAS MGM on m.MUSICIAN_ID = mgm.MUSICIAN_ID 
 JOIN MUSICAL_GENRES MG on mgm.MUSICAL_GENRE_ID = mg.MUSICAL_GENRE_ID 
-WHERE (mgm.MUSICIAN_ID) < 2
-GROUP by a.name;
---order by count(mgm.MUSICIAN_ID); не готово
+GROUP by a.name
+having count(mgm.MUSICIAN_ID) >= 2;
 
 --3.7
 SELECT t.name as track from TRACKS T 
@@ -183,11 +181,11 @@ values('10 минут', 200, 10);
 
 SELECT * from TRACKS T 
 
-select a.name, count(t.album_id) from ALBUMS A 
-join TRACKS T on a.ALBUM_ID =t.ALBUM_ID
-GROUP by a.name;
-having select min(select count(t.album_id) from albums a) from albums
-order by count(t.album_id);
+select name from (
+	select min(count) from (
+		select a.name, count(t.name) from ALBUMS A 
+		join TRACKS T on a.ALBUM_ID =t.ALBUM_ID
+		GROUP by a.name
+		) as min
+) as t
 
-select a.name from ALBUMS A 
-where min(select count(t.album_id) from albums)
