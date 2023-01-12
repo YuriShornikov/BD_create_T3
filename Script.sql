@@ -66,9 +66,6 @@ SELECT * FROM musical_genres;
 INSERT INTO albums(name, album_release)
 VALUES('Театр демонов', 2010), ('Группа крови', 1988), ('Встречная полоса', 2018), ('Артист', 2016), ('Храм', 2018), ('Древнерусский рейв', 2021), ('Zeit', 2022), ('Жизнь и Смерть', 2020), ('Вымышленный альбом', 2023);
 
-INSERT INTO MUSICIANS_ALBUMS(musician_id, album_id)
-VALUES(7, 9), (6, 9);
-
 SELECT * from MUSICIANS_ALBUMS MA ;
 
 SELECT * FROM albums;
@@ -133,8 +130,6 @@ join TRACKS T on dt.TRACK_ID = t.TRACK_ID
 join ALBUMS A on t.ALBUM_ID = a.ALBUM_ID 
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
---WHERE m.name in ('Виктор Цой', 'Михаил Горшенёв')
---WHERE m.name like '%Михаил Горшенёв%'
 WHERE m.name ='Виктор Цой' and m.name ='Михаил Горшенёв'
 GROUP by d.name ; -- не выводит инфу
 
@@ -164,6 +159,7 @@ WHERE t.time = (select min(time) from TRACKS)
 group by m.name;
 
 --3.9
+--заполнение таблиц
 INSERT into MUSICIANS(name)
 VALUES('Бутусов');
 
@@ -180,12 +176,14 @@ values('10 минут', 200, 10);
 
 SELECT * from TRACKS T 
 
-select a.name from ALBUMS A 
-join TRACKS T on a.ALBUM_ID =t.ALBUM_ID
-HAVING t.ALBUM_ID in (select min(сс) from (select count(t.ALBUM_ID) from TRACKS T) cc
-
-
-select a.name, count(t.ALBUM_ID) from ALBUMS A 
-join TRACKS T on a.ALBUM_ID =t.ALBUM_ID 
-GROUP by a.name
-ORDER by count(t.ALBUM_ID);
+--3.9 запрос
+select a.name from ALBUMS A
+join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
+group by a.name
+having count(t.name) in (
+	select min(count) from (
+		select a.name, count(t.name) from ALBUMS A 
+		join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
+		GROUP by a.name
+		) as count
+	);
