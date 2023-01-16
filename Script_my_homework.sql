@@ -120,23 +120,26 @@ group by a.name
 ORDER by avg(t.time);
 
 --3.4
-SELECT m.name from MUSICIANS M 
+SELECT distinct m.name from MUSICIANS M 
 join MUSICIANS_ALBUMS MA on m.MUSICIAN_ID = ma.MUSICIAN_ID 
 join ALBUMS A on ma.ALBUM_ID = a.ALBUM_ID
-WHERE a.ALBUM_RELEASE  != 2020
-GROUP by m.name;
+Where m.name != (
+	select m.name from MUSICIANS M 
+	join MUSICIANS_ALBUMS MA on m.MUSICIAN_ID = ma.MUSICIAN_ID 
+	join ALBUMS A on ma.ALBUM_ID = a.ALBUM_ID
+	WHERE a.ALBUM_RELEASE = 2020
+	)
+ORDER by m.name;
 
 --3.5
-SELECT d.name from DIGESTS D 
+SELECT distinct d.name from DIGESTS D 
 join DIGESTS_TRACKS DT on d.DIGESTS_ID = dt.DIGESTS_ID 
 join TRACKS T on dt.TRACK_ID = t.TRACK_ID 
 join ALBUMS A on t.ALBUM_ID = a.ALBUM_ID 
 join MUSICIANS_ALBUMS MA on a.ALBUM_ID = ma.ALBUM_ID 
 join MUSICIANS M on ma.MUSICIAN_ID = m.MUSICIAN_ID 
---WHERE m.name in ('Виктор Цой', 'Михаил Горшенёв')
---WHERE m.name like '%Михаил Горшенёв%'
-WHERE m.name ='Виктор Цой' and m.name ='Михаил Горшенёв'
-GROUP by d.name ; -- не выводит инфу
+WHERE m.name ='Виктор Цой' or m.name ='Михаил Горшенёв'
+ORDER by d.name ;
 
 --3.6
 SELECT a.name from ALBUMS A 
@@ -152,7 +155,7 @@ SELECT t.name as track from TRACKS T
 full outer join DIGESTS_TRACKS DT on t.TRACK_ID = dt.TRACK_ID 
 full outer join DIGESTS D on dt.DIGESTS_ID = d.DIGESTS_ID 
 where d.name is null 
-GROUP by t.name;
+
 
 --3.8
 SELECT m.name from MUSICIANS M 
@@ -160,7 +163,7 @@ join MUSICIANS_ALBUMS MA on m.MUSICIAN_ID = ma.MUSICIAN_ID
 join ALBUMS A on ma.ALBUM_ID = a.ALBUM_ID 
 join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
 WHERE t.time = (select min(time) from TRACKS)
-group by m.name;
+
 
 --3.9
 INSERT into MUSICIANS(name)
@@ -181,11 +184,25 @@ values('10 минут', 200, 10);
 
 SELECT * from TRACKS T 
 
-select name from (
+--3.9 запрос
+select a.name from ALBUMS A
+join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
+group by a.name
+having count(t.name) in (
 	select min(count) from (
 		select a.name, count(t.name) from ALBUMS A 
-		join TRACKS T on a.ALBUM_ID =t.ALBUM_ID
+		join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
 		GROUP by a.name
-		) as min
-) as t
+		) as count
+	);
 
+select a.name from ALBUMS A 
+join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
+GROUP by a.name
+having count(t.name) = (
+	select count(t.name) from ALBUMS A 
+	join TRACKS T on a.ALBUM_ID = t.ALBUM_ID
+	GROUP by a.name
+	order by count(t.name)
+	limit 1
+	);
