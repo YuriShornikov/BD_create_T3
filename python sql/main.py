@@ -71,13 +71,13 @@ def createdb(con):
         CREATE TABLE IF NOT EXISTS phones(
             id SERIAL PRIMARY KEY,
             phone VARCHAR,
-            client_id INTEGER NOT NULL REFERENCES clients(id)
+            client_id SERIAL NOT NULL REFERENCES clients(id)
             );
         """)
 
         con.commit()
 
-def add_clients(con, name, surname, email, phone):
+def add_clients(con, name, surname, email, phone=None):
     with con.cursor() as cur:
         cur.execute("""
             INSERT INTO clients(name, surname, email) 
@@ -86,12 +86,24 @@ def add_clients(con, name, surname, email, phone):
         )
 
         cur.execute("""
-            INSERT INTO phones(phone, client_id)
+            INSERT INTO phones(phone)
             VALUES (%s);""",
-            (name, phone, )
+            (phone, )
         )
 
+        con.commit()
+
+def add_phone(con, name, phone):
+    with con.cursor() as cur:
+        cur.execute("""
+            INSERT INTO phones(phone)
+            VALUES (%s);""",
+            (phone, )
+        )
+
+        con.commit()
 
 if __name__ == '__main__':
     con = psycopg2.connect(database="sql_python", user="postgres", password="Irregularlypost")
     createdb(con)
+    add_clients(con, name="test", surname="test", email="test@gmail.com", phone=" ")
