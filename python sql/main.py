@@ -93,17 +93,33 @@ def add_clients(con, name, surname, email, phone=None):
 
         con.commit()
 
-def add_phone(con, name, phone):
+def add_phone(con, client_id, phone):
     with con.cursor() as cur:
         cur.execute("""
-            INSERT INTO phones(phone)
-            VALUES (%s);""",
-            (phone, )
+            INSERT INTO phones(client_id, phone)
+            VALUES (%s , %s);""",
+            (client_id, phone, )
         )
 
         con.commit()
+
+def update_client(con, client_id, name, surname, email, phone):
+    with con.cursor() as cur:
+        cur.execute("""
+            UPDATE clients SET name = %s, surname = %s, email = %s
+            WHERE id = %s;""",
+            (name, surname, email, client_id, )
+        )
+
+        cur.execute("""
+            UPDATE phones SET phone = %s
+            WHERE client_id = %s;""",
+            (phone, client_id, )
+        )
 
 if __name__ == '__main__':
     con = psycopg2.connect(database="sql_python", user="postgres", password="Irregularlypost")
     createdb(con)
     add_clients(con, name="test", surname="test", email="test@gmail.com", phone=" ")
+    add_phone(con, client_id=1, phone=99999)
+    update_client(con, client_id=1, name="test2", surname="test2", email="test2@gmail.com", phone=11111)
