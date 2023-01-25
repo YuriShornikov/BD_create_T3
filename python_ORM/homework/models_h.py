@@ -31,7 +31,7 @@ class Stock(Base):
     __tablename__ == "stock"
 
     id = sq.Column(sq.Integer, primary_key=True)
-    count = sq.Column(sq.Integer, nullable=False)
+    count = sq.Column(sq.Integer)
     id_book = sq.Column(sq.Integer, sq.ForeignKey("book.id"), nullable=False)
     id_shop = sq.Column(sq.Integer, sq.ForeignKey("shop.id"), nullable=False)
 
@@ -39,13 +39,13 @@ class Stock(Base):
     shop = relationship(Shop, backref="stock")
 
 
-class sale(Base):
+class Sale(Base):
     __tablename__ == "sale"
 
     id = sq.Column(sq.Integer, primary_key=True)
     price = sq.Column(sq.Integer, nullable=False)
     date_sale = sq.Column(sq.Text, nullable=False)
-    count = sq.Column(sq.Integer, nullable=False)
+    count = sq.Column(sq.Integer)
 
     id_stock = sq.Column(sq.Integer, sq.ForeignKey("stock.id"), nullable=False)
 
