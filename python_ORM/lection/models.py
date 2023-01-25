@@ -10,6 +10,8 @@ class Course(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=40), unique=True)
 
+    def __str__(self):
+        return f'Course {self.id}: {self.name}'
 
 class Homework(Base):
     __tablename__ = "homework"
@@ -20,6 +22,9 @@ class Homework(Base):
     course_id = sq.Column(sq.Integer, sq.ForeignKey("course.id"), nullable=False)
 
     course = relationship(Course, backref="homework")
+
+    def __str__(self):
+        return f'Homework {self.id}: ({self.number}, {self.description} - {self.course})'
 
 
 def create_tables(engine):
