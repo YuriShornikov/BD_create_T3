@@ -4,14 +4,13 @@ from sqlalchemy.orm import declarative_base, relationship
 Base = declarative_base()
 
 class Publisher(Base):
-    __tablename__ == "publisher"
+    __tablename__ = "publisher"
 
     id = sq.Column(sq.Integer, primary_key=True)
-    name = sq.Column(sq.String(length=40), nullable=False)
-
+    name = sq.Column(sq.Text, unique=True)
 
 class Book(Base):
-    __tablename__ == "book"
+    __tablename__ = "book"
 
     id = sq.Column(sq.Integer, primary_key=True)
     title = sq.Column(sq.String(length=40), nullable=False)
@@ -19,16 +18,20 @@ class Book(Base):
 
     publisher = relationship(Publisher, backref="book")
 
+    def __str__(self):
+        return f'{self.title}'
 
 class Shop(Base):
-    __tablename__ == "Shop"
+    __tablename__ = "shop"
 
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=40), nullable=False)
 
+    def __str__(self):
+        return f'{self.name}'
 
 class Stock(Base):
-    __tablename__ == "stock"
+    __tablename__ = "stock"
 
     id = sq.Column(sq.Integer, primary_key=True)
     count = sq.Column(sq.Integer)
@@ -39,13 +42,24 @@ class Stock(Base):
     shop = relationship(Shop, backref="stock")
 
 
+
 class Sale(Base):
-    __tablename__ == "sale"
+    __tablename__ = "sale"
 
     id = sq.Column(sq.Integer, primary_key=True)
     price = sq.Column(sq.Integer, nullable=False)
     date_sale = sq.Column(sq.Text, nullable=False)
     count = sq.Column(sq.Integer)
-
     id_stock = sq.Column(sq.Integer, sq.ForeignKey("stock.id"), nullable=False)
+
+    stock = relationship(Stock, backref="stock")
+
+    def __str__(self):
+        return f'{self.price} | {self.date_sale}'
+
+
+
+def create_tables(engine):
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
 
