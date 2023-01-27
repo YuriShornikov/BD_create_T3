@@ -1,6 +1,8 @@
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
+from pprint import pprint
+
 from models_h import create_tables, Publisher, Book, Stock, Shop, Sale
 
 from DSN import DSN
@@ -49,6 +51,9 @@ session.close()
 # enter = input('введите фамилию Издателя: ')
 
 # if enter == 'Пушкин':
-for c in session.query(Publisher).join(Book).join(Stock).join(Shop.name).join(Sale.price).join(Sale.date_sale):
+# for c in session.query(Book).filter(Publisher.name.like('%Пушкин%')).all():
+#     print(c)
+
+for c in session.query(Book).filter(Publisher.name.like('%Пушкин%')).join(Stock).all():
     print(c)
 
