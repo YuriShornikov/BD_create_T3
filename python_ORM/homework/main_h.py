@@ -45,15 +45,45 @@ session.add_all([stock1, stock2, stock3, stock4, stock5])
 session.commit()
 
 # print(book4)
-session.close()
+
 
 
 # enter = input('введите фамилию Издателя: ')
 
 # if enter == 'Пушкин':
-# for c in session.query(Book).filter(Publisher.name.like('%Пушкин%')).all():
+# query = session.query(Shop).join(Stock).join(Book).all
+# if query:
+#   for output in query:
+#     return output
+
+# shop = session.query(Shop).join(Stock).join(Book).join(Publisher).all()
+# if shop:
+#   if Publisher.name == 'Пушкин':
+#     print(shop)
+
+# query = session.query(Book, Shop, Stock).join(Book).join(Shop).all()
+# for output in query:
+#   for c in output:
+#     print(c)
+  # print(type(output))
+
+query = session.query(Book, Shop, Sale).join(Publisher).filter(Publisher.name.like('%Пушкин%')).all()
+for output in query:
+    print(output)
+
+
+# query = session.query(Book, Shop, Sale).join(Book).join(Shop).join(Sale).filter(Publisher.name.like('%Пушкин%')).all()
+# for c in query:
+#     print(list(c))
+
+session.commit()
+session.close()
+# query = session.query(Stock).join(Shop).join(Book).filter(Shop.name == 'OZON')
+# for c in session.query(Book, Sale, Stock).join(Book).join(Shop).all():
+#   print(c)
+# for c in session.query(Shop).join(Stock).join(Book).join(Publisher).all():
 #     print(c)
 
-for c in session.query(Book).filter(Publisher.name.like('%Пушкин%')).join(Stock).all():
-    print(c)
-
+# query = session.query(Shop, Book).filter(Publisher.name == 'Пушкин')
+# for c in query:
+#     print(c)

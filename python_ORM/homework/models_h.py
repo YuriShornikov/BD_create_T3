@@ -41,7 +41,8 @@ class Stock(Base):
     book = relationship(Book, backref="stock")
     shop = relationship(Shop, backref="stock")
 
-
+    def __str__(self):
+        return f'|'
 
 class Sale(Base):
     __tablename__ = "sale"
